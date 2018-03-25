@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="fragments/head :: head"></th:block>
+<body>
+<div class="container-fluid">
+    <th:block th:replace="fragments/navbar :: navbar"></th:block>
+    <table class="table mt-5">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">EGN</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <th:block th:each="e,index : ${allEmployers}">
+            <tr>
+                <th scope="row" th:text="${index.count}"></th>
+                <!--/*@thymesVar id="getEgn" type="editRoute"*/-->
+                <td th:text="*{e.getUsername()}"></td>
+                <td th:text="*{e.getFirstName()}"></td>
+                <td th:text="*{e.getLastName()}"></td>
+
+                <td><a class="btn btn-secondary" th:href="@{/edit/{egn}(egn=${e.getUsername()})}">Edit</a></td>
+                <td><a class="btn btn-secondary" th:href="@{/delete/{egn}(egn=${e.getUsername()})}">Delete</a></td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

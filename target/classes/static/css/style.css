@@ -1,0 +1,26 @@
+.navbar-black {
+    background-color: #000000;
+}
+
+.nav-link-white {
+    color: #ffffff;
+}
+
+.nav-link-black:hover {
+    color: #ffffff;
+}
+
+.nav-link-black:focus {
+    color: #ffffff;
+}
+
+.dropdown-toggle::after {
+    display:none
+}
+
+.full-width-div {
+    width: 100vw;
+    position: relative;
+    margin-left: -50vw;
+    left: 50%;
+}

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="fragments/head :: head"></th:block>
+<body>
+<div class="container-fluid">
+    <th:block th:replace="fragments/navbar :: navbar"></th:block>
+    <div class="container">
+        <form th:action="${employerInput.getUsername()}" th:method="POST" class="justify-content-center align-items-center" th:object="${employerInput}">
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <h2>Edit employer</h2>
+                    <hr>
+                </div>
+            </div>
+            <div class="row h-100 justify-content-center align-items-center mt-2">
+                <div class="col-md-2 field-label-responsive">
+                    <label for="egn">EGN:</label>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <input type="text" name="egn" class="form-control" id="egn"  th:value="${employerInput.getUsername()}" disabled="disabled"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row h-100 justify-content-center align-items-center mt-2">
+                <div class="col-md-2 field-label-responsive">
+                    <label for="password">Password:</label>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <input type="password" name="password" class="form-control" id="password" th:value="${employerInput.getPassword()}" disabled="disabled"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--<div class="row h-100 justify-content-center align-items-center mt-2">-->
+            <!--<div class="col-md-2 field-label-responsive">-->
+            <!--<label for="confirmPassword">Confirm Password:</label>-->
+            <!--</div>-->
+            <!--<div class="col-md-3">-->
+            <!--<div class="form-group">-->
+            <!--<div class="input-group mb-2 mr-sm-2 mb-sm-0">-->
+            <!--<input type="password" name="confirmPassword" class="form-control" id="confirmPassword" th:value="${employerInput.get()}"/>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+
+            <div class="row h-100 justify-content-center align-items-center mt-2">
+                <div class="col-md-2 field-label-responsive">
+                    <label for="firstName">Employer First Name:</label>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <input type="text" class="form-control form-control-lg rounded-0" name="firstName" id="firstName" th:value="${employerInput.getFirstName()}" disabled="disabled"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row h-100 justify-content-center align-items-center mt-2">
+                <div class="col-md-2 field-label-responsive">
+                    <label for="lastName">Employer Last Name:</label>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <input type="text" class="form-control form-control-lg rounded-0" name="lastName" id="lastName" th:value="${employerInput.getLastName()}" disabled="disabled"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row h-100 justify-content-center align-items-center mt-2">
+                <div class="col-md-2 field-label-responsive">
+                    <label for="position">Position:</label>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <select class="form-control" id="position" name="position" disabled="disabled">
+                                <option>slu6alka</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row h-100 justify-content-center align-items-center mt-2">
+                <div class="col-md-2 field-label-responsive">
+                    <label for="salary">Salary</label>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <input type="number" class="form-control" id="salary" name="salary" th:value="${employerInput.getSalary()}" disabled="disabled"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row h-100 justify-content-center align-items-center mt-2">
+                <button type="submit" class="btn btn-danger btn-lg float-right" id="btnRegister">
+                    Delete
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

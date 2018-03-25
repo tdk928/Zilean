@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+<body>
+<div class="container-fluid">
+    <th:block th:replace="fragments/navbar"></th:block>
+    <div sec:authorize="isAuthenticated()">
+        <h1>YOU WILL SEE THIS IF YOU ARE LOGGED IN</h1>
+    </div>
+    <div sec:authorize="hasRole('ADMIN')">
+        <h1>YOU WILL SEE THIS IF YOU ARE ADMIN</h1>
+    </div>
+</div>
+</body>
+</html>
