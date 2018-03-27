@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
-public class AccountController {
+public class AccountController extends BaseController {
     private final EmployeeService userService;
 
     @Autowired
@@ -19,21 +19,26 @@ public class AccountController {
     }
 
     @GetMapping("/login")
-    public ModelAndView login(@RequestParam(required = false, name = "error") String error, ModelAndView modelAndView) {
-        modelAndView.setViewName("login");
+    public ModelAndView login(@RequestParam(required = false, name = "error") String error) {
+       if (error != null) {
+           this.view("login","error", error);
+       }
 
-        if(error != null) modelAndView.addObject("error", error);
-
-        return modelAndView;
+        return this.view("login");
     }
 
     @PostMapping("/logout")
-    public ModelAndView logout(@RequestParam(required = false, name = "logout") String logout, ModelAndView modelAndView, RedirectAttributes redirectAttributes) {
-        modelAndView.setViewName("redirect:/login");
+    public ModelAndView logout(@RequestParam(required = false, name = "logout") String logout,RedirectAttributes redirectAttributes) {
+        if (logout != null){
+            redirectAttributes.addFlashAttribute("logout", logout);
+        }
 
-        if(logout != null) redirectAttributes.addFlashAttribute("logout", logout);
+        return this.redirect("login");
+    }
 
-        return modelAndView;
+    @GetMapping("/changePassword")
+    public ModelAndView changePassword(ModelAndView modelAndView) {
+        return this.view("change-password");
     }
 
 }

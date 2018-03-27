@@ -1,5 +1,5 @@
 <th:block th:fragment="navbar">
-    <nav class="navbar navbar-toggleable-md navbar-black full-width-div">
+    <nav class="navbar navbar-toggleable-md full-width-div" style="background-color: #000000;">
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -26,6 +26,9 @@
                     <form th:action="@{/logout}" th:method="POST">
                         <a class="nav-link nav-link-white" href="/logout">Logout</a>
                     </form>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item disabled">
+                    <a class="nav-link nav-link-white" href="/changePassword">Change Password</a>
                 </li>
             </ul>
         </div>

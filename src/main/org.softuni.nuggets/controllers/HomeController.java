@@ -7,19 +7,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-public class HomeController {
+public class HomeController extends BaseController{
     @GetMapping("/")
-    public ModelAndView index(ModelAndView modelAndView) {
-        modelAndView.setViewName("index");
-
-        return modelAndView;
+    public ModelAndView index() {
+       return this.view("index");
     }
 
     @GetMapping("/home")
-    public ModelAndView home(ModelAndView modelAndView) {
-        modelAndView.setViewName("home");
-
-        return modelAndView;
+    public ModelAndView home() {
+       return this.view("home");
     }
 
     @GetMapping("/asd")

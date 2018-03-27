@@ -85,9 +85,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .findFirstByEgn(egn);
 
         if(employeeEntity == null) return;
-
-        modelMapper.map(editEmployeeBindingModel, employeeEntity);
-        employeeEntity.setPassword(this.encoder.encode(employeeEntity.getPassword()));
+        modelMapper.map(editEmployeeBindingModel,employeeEntity);
+        employeeEntity.setPassword(this.encoder.encode(editEmployeeBindingModel.getPassword()));
 //        employeeEntity.setEgn(editEmployeeBindingModel.getUsername());
 
         this.employeeRepository.save(employeeEntity);
