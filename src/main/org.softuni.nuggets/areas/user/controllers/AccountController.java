@@ -1,10 +1,9 @@
-package org.softuni.nuggets.controllers;
+package org.softuni.nuggets.areas.user.controllers;
 
-import org.softuni.nuggets.models.binding.RegisterBindingModel;
-import org.softuni.nuggets.services.EmployeeService;
+import org.softuni.nuggets.areas.user.services.EmployeeService;
+import org.softuni.nuggets.controllers.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -37,8 +36,18 @@ public class AccountController extends BaseController {
     }
 
     @GetMapping("/changePassword")
-    public ModelAndView changePassword(ModelAndView modelAndView) {
-        return this.view("change-password");
+    public ModelAndView changePassword() {
+        return this.view("test");
     }
+
+    @GetMapping("/calendar")
+    public ModelAndView calendar() {
+        return this.view("calendar");
+    }
+
+//    @GetMapping("/calendar")
+//        public ModelAndView calendar() {
+//           return this.view("calendar");
+//        }
 
 }

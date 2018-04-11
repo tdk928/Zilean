@@ -3,7 +3,7 @@ package org.softuni.nuggets.models.binding;
 public class EditEmployeeBindingModel {
     private String id;
 
-    private String egn;
+    private String username;
 
     private String firstName;
 
@@ -33,16 +33,11 @@ public class EditEmployeeBindingModel {
     }
 
     public String getUsername() {
-        return this.egn;
+        return this.username;
     }
 
-    public void setEgn(String egn) {
-        this.egn = egn;
-    }
-
-
-    public String getEgn() {
-        return this.egn;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstName() {

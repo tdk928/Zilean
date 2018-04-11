@@ -1,6 +1,6 @@
 package org.softuni.nuggets.config;
 
-import org.softuni.nuggets.services.EmployeeServiceImpl;
+import org.softuni.nuggets.areas.user.services.EmployeeServiceImpl;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -34,7 +34,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .formLogin()
                 .loginPage("/login").permitAll()
                 .loginProcessingUrl("/login")
-                .usernameParameter("egn")
+                .usernameParameter("username")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/home")
                 .failureUrl("/error")

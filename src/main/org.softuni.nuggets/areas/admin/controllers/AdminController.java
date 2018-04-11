@@ -1,13 +1,11 @@
-package org.softuni.nuggets.controllers;
+package org.softuni.nuggets.areas.admin.controllers;
 
 import org.modelmapper.ModelMapper;
-import org.softuni.nuggets.entities.Employee;
+import org.softuni.nuggets.areas.admin.services.AdminService;
+import org.softuni.nuggets.controllers.BaseController;
 import org.softuni.nuggets.models.binding.EditEmployeeBindingModel;
 import org.softuni.nuggets.models.binding.RegisterBindingModel;
 import org.softuni.nuggets.models.service.EmployeeServiceModel;
-import org.softuni.nuggets.services.EmployeeService;
-import org.springframework.security.core.userdetails.UserCache;
-import org.springframework.security.core.userdetails.cache.SpringCacheBasedUserCache;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,22 +16,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-
 @Controller
 public class AdminController extends BaseController {
 
-//    private SpringCacheBasedUserCache userCache;
+    private AdminService adminService;
 
-    private EmployeeService employeeService;
+    public AdminController(AdminService adminService) {
 
-    public AdminController(EmployeeService employeeService) {
-//        this.userCache = cache;
-        this.employeeService = employeeService;
+        this.adminService = adminService;
     }
 
     @GetMapping("/register")
-    public ModelAndView register(ModelAndView modelAndView, Model model) {
+    public ModelAndView register(Model model) {
         if (!model.containsAttribute("employerInput")) {
             model.addAttribute("employerInput", new RegisterBindingModel());
         }
@@ -44,7 +38,7 @@ public class AdminController extends BaseController {
     @PostMapping("/register")
     public ModelAndView registerConfirm(@ModelAttribute RegisterBindingModel bindingModel) {
         if (bindingModel.getPassword().equals(bindingModel.getConfirmPassword())) {
-            this.employeeService.register(bindingModel);
+            this.adminService.register(bindingModel);
         }
 
         return this.redirect("login");
@@ -52,16 +46,16 @@ public class AdminController extends BaseController {
 
     @GetMapping("/all-employers")
     public ModelAndView listAllEmployees() {
-        return this.view("all-employers", "allEmployers", this.employeeService.getAllEmployers());
+        return this.view("all-employers", "allEmployers", this.adminService.getAllEmployers());
 
     }
 
-    @GetMapping("/edit/{egn}")
-    public ModelAndView editEmployee(@PathVariable("egn") String egn,Model model, ModelMapper modelMapper) {
-        EmployeeServiceModel employeeByEgn = this.employeeService.getByEgn(egn);
+    @GetMapping("/edit/{username}")
+    public ModelAndView editEmployee(@PathVariable("username") String username,Model model, ModelMapper modelMapper) {
+        EmployeeServiceModel employeeByUsername = this.adminService.getByUsername(username);
 
         if (!model.containsAttribute("employerInput")) {
-            EditEmployeeBindingModel bindingModel = modelMapper.map(employeeByEgn, EditEmployeeBindingModel.class);
+            EditEmployeeBindingModel bindingModel = modelMapper.map(employeeByUsername, EditEmployeeBindingModel.class);
 
             model.addAttribute("employerInput", bindingModel);
         }
@@ -69,8 +63,8 @@ public class AdminController extends BaseController {
         return this.view("edit-employer");
     }
 
-    @PostMapping("/edit/{egn}")
-    public ModelAndView editEmployerForm(@PathVariable String egn, @ModelAttribute(name = "employerInput") EditEmployeeBindingModel editEmployeeBindingModel,
+    @PostMapping("/edit/{username}")
+    public ModelAndView editEmployerForm(@PathVariable String username, @ModelAttribute(name = "employerInput") EditEmployeeBindingModel editEmployeeBindingModel,
                                          BindingResult bindingResult,RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.employerInput", bindingResult);
@@ -78,7 +72,7 @@ public class AdminController extends BaseController {
 
             return this.redirect("home");
         } else {
-            this.employeeService.editEmployer(egn, editEmployeeBindingModel);
+            this.adminService.editEmployer(username, editEmployeeBindingModel);
 //            this.userCache.removeUserFromCache(egn);
             return this.redirect("all-employers");
         }
@@ -86,18 +80,18 @@ public class AdminController extends BaseController {
 
     }
 
-    @GetMapping("/delete/{egn}")
-    public ModelAndView deleteEmployer(@PathVariable String egn, ModelAndView modelAndView, Model model, ModelMapper modelMapper) {
-        EmployeeServiceModel employeeByEgn = this.employeeService.getByEgn(egn);
+    @GetMapping("/delete/{username}")
+    public ModelAndView deleteEmployer(@PathVariable String username, Model model, ModelMapper modelMapper) {
+        EmployeeServiceModel employeeByUsername = this.adminService.getByUsername(username);
 
-        model.addAttribute("employerInput", modelMapper.map(employeeByEgn, EditEmployeeBindingModel.class)); //TODO fix with deleteBinding?
+        model.addAttribute("employerInput", modelMapper.map(employeeByUsername, EditEmployeeBindingModel.class)); //TODO fix with deleteBinding?
 
         return this.view("remove-employer");
     }
 
-    @PostMapping("/delete/{egn}")
-    public ModelAndView removeConfirm(@PathVariable String egn, ModelAndView modelAndView) {
-        this.employeeService.removeEmployer(egn);
+    @PostMapping("/delete/{username}")
+    public ModelAndView removeConfirm(@PathVariable String username) {
+        this.adminService.removeEmployer(username);
 
 //        modelAndView.setViewName("redirect:/all-employers");
 

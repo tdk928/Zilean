@@ -1,13 +1,10 @@
-package org.softuni.nuggets.repositories;
+package org.softuni.nuggets.areas.user.repositories;
 
 import org.softuni.nuggets.entities.Employee;
-import org.softuni.nuggets.models.service.EmployeeServiceModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, String> {
-    Employee findFirstByEgn(String employee);
-
-//    EmployeeServiceModel findByEgn(String egn);
+    Employee findFirstByUsername(String employee);
 }

@@ -1,16 +1,11 @@
 package org.softuni.nuggets.entities;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -27,7 +22,7 @@ public class Employee implements UserDetails {
     private String id;
 
     @Column
-    private String egn;
+    private String username;
 
 //    @NotEmpty
     @Column(name = "first_name")
@@ -83,13 +78,12 @@ public class Employee implements UserDetails {
 
     @Override
     public String getUsername() {
-        return this.egn;
+        return this.username;
     }
 
-    public void setEgn(String egn) {
-        this.egn = egn;
+    public void setUsername(String username) {
+        this.username = username;
     }
-
 
     public String getFirstName() {
         return this.firstName;

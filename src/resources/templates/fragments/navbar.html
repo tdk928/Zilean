@@ -5,31 +5,37 @@
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand nav-link-white" href="/">Zilean</a>
+        <a class="navbar-brand nav-link-white" href="/" id="zileanBtn">Zilean</a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item disabled">
-                    <a class="nav-link nav-link-white" href="/home">Home</a>
+                    <a class="nav-link nav-link-white" href="/home" id="homeBtn">Home</a>
                 </li>
                 <!--admin functionality-->
                 <li class="nav-item disabled" sec:authorize="isAuthenticated()">
-                    <a class="nav-link nav-link-white" href="/all-employers">All employers</a>
+                    <a class="nav-link nav-link-white" href="/all-employers" id="all-employers">All employers</a>
                 </li>
                 <li class="nav-item disabled" sec:authorize="isAnonymous()">
-                    <a class="nav-link nav-link-white" href="/login">Login</a>
+                    <a class="nav-link nav-link-white" href="/login" id="loginBtn">Login</a>
                 </li>
                 <li class="nav-item disabled" sec:authorize="isAnonymous()">
-                    <a class="nav-link nav-link-white" href="/register">Register</a>
+                    <a class="nav-link nav-link-white" href="/register" id="registerBtn">Register</a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item disabled">
                     <form th:action="@{/logout}" th:method="POST">
-                        <a class="nav-link nav-link-white" href="/logout">Logout</a>
+                        <a class="nav-link nav-link-white" href="/logout" id="logoutBtn">Logout</a>
                     </form>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item disabled">
-                    <a class="nav-link nav-link-white" href="/changePassword">Change Password</a>
+                    <a class="nav-link nav-link-white" href="/changePassword" id="changePassword">Change Password</a>
                 </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item disabled">
+                    <a class="nav-link nav-link-white" href="/calendar" id="calendar">Calendar</a>
+                </li>
+                <!--<li class="nav-item disabled">-->
+                    <!--<a class="nav-link nav-link-white" href="/calendar">Calendar</a>-->
+                <!--</li>-->
             </ul>
         </div>
     </nav>
