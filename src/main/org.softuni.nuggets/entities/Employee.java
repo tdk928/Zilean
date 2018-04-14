@@ -21,14 +21,12 @@ public class Employee implements UserDetails {
     @Column(name = "id", updatable = false, nullable = false)
     private String id;
 
-    @Column
+    @Column(unique = true)
     private String username;
 
-//    @NotEmpty
     @Column(name = "first_name")
     private String firstName;
 
-//    @NotEmpty
     @Column(name = "last_name")
     private String lastName;
 

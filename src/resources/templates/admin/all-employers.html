@@ -24,8 +24,8 @@
                 <td th:text="*{e.getFirstName()}"></td>
                 <td th:text="*{e.getLastName()}"></td>
 
-                <td><a class="btn btn-secondary" th:href="@{/edit/{egn}(egn=${e.getUsername()})}">Edit</a></td>
-                <td><a class="btn btn-secondary" th:href="@{/delete/{egn}(egn=${e.getUsername()})}">Delete</a></td>
+                <td><a class="btn btn-secondary" th:href="@{/admin/edit/{egn}(egn=${e.getUsername()})}">Edit</a></td>
+                <td><a class="btn btn-secondary" th:href="@{/admin/delete/{egn}(egn=${e.getUsername()})}">Delete</a></td>
             </tr>
         </th:block>
         </tbody>

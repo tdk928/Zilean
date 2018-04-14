@@ -1,6 +1,6 @@
 package org.softuni.nuggets.models.binding;
 
-public class EditEmployeeBindingModel {
+public class AdminEditEmployeeBindingModel {
     private String id;
 
     private String username;
@@ -21,7 +21,7 @@ public class EditEmployeeBindingModel {
 
     private boolean isEnabled;
 
-    public EditEmployeeBindingModel() {
+    public AdminEditEmployeeBindingModel() {
     }
 
     public String getId() {
