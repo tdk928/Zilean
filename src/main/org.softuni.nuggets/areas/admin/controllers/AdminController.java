@@ -98,21 +98,7 @@ public class AdminController extends BaseController {
     @PostMapping("/admin/delete/{username}")
     public ModelAndView removeConfirm(@PathVariable String username) {
         this.adminService.removeEmployer(username);
-
-//        modelAndView.setViewName("redirect:/all-employers");
-
-
         return this.redirect("admin/all-employers");
     }
 
-    @PostMapping("/change-password")
-    public ModelAndView changePassword(@ModelAttribute RegisterBindingModel bindingModel, ModelAndView modelAndView) {
-        modelAndView.setViewName("change-password");
-
-//        if (bindingModel.getPassword().equals(bindingModel.getConfirmPassword())) {
-//            this.employeeService.register(bindingModel);
-//        }
-
-        return modelAndView;
-    }
 }

@@ -1,5 +1,10 @@
 package org.softuni.nuggets.models.service;
 
+import org.softuni.nuggets.entities.Event;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class EmployeeServiceModel {
     private String id;
 
@@ -21,7 +26,10 @@ public class EmployeeServiceModel {
 
     private boolean isEnabled;
 
+    private List<Event> events;
+
     public EmployeeServiceModel() {
+//        this.events = new ArrayList<>();
     }
 
     public void setId(String id) {
@@ -103,5 +111,18 @@ public class EmployeeServiceModel {
 
     public void setEnabled(boolean enabled) {
         isEnabled = enabled;
+    }
+
+    public List<Event> getEvents() {
+        return this.events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
+
+    public void addEvent(Event event) {
+        this.getEvents().add(event);
+        this.setEvents(this.getEvents());
     }
 }

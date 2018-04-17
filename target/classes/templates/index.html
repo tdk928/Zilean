@@ -7,6 +7,9 @@
 <body>
 <div class="container-fluid" id="content">
     <th:block th:replace="fragments/navbar"></th:block>
+
+    <img src="/img/zil.jpg" alt="Responsive image" style="width: 100%">
+
     <div sec:authorize="isAuthenticated()">
         <h1>YOU WILL SEE THIS IF YOU ARE LOGGED IN</h1>
     </div>

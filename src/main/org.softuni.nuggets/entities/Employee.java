@@ -1,11 +1,15 @@
 package org.softuni.nuggets.entities;
 
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -49,7 +53,14 @@ public class Employee implements UserDetails {
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> authorities;
 
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "employers_events",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id"))
+    private List<Event> events;
+
     public Employee() {
+//        this.events = new ArrayList<>();
     }
 
     @Override
@@ -143,4 +154,11 @@ public class Employee implements UserDetails {
         return this.isEnabled;
     }
 
+    public List<Event> getEvents() {
+        return this.events;
+    }
+
+    public void setEvents(List<Event> events) {
+        this.events = events;
+    }
 }
