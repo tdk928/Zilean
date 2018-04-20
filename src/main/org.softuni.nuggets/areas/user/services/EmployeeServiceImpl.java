@@ -2,7 +2,6 @@ package org.softuni.nuggets.areas.user.services;
 
 import org.modelmapper.ModelMapper;
 import org.softuni.nuggets.entities.Employee;
-import org.softuni.nuggets.models.binding.AdminEditEmployeeBindingModel;
 import org.softuni.nuggets.models.binding.UserEditEmployeeBindingModel;
 import org.softuni.nuggets.models.service.EmployeeServiceModel;
 import org.softuni.nuggets.areas.user.repositories.EmployeeRepository;
@@ -19,12 +18,14 @@ import javax.transaction.Transactional;
 public class EmployeeServiceImpl implements EmployeeService {
     private final EmployeeRepository employeeRepository;
     private final BCryptPasswordEncoder encoder;
+    private final ModelMapper modelMapper;
     @Autowired
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, BCryptPasswordEncoder encoder) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, BCryptPasswordEncoder encoder, ModelMapper modelMapper) {
 
 
         this.employeeRepository = employeeRepository;
         this.encoder = encoder;
+        this.modelMapper = modelMapper;
     }
 
     private void configureUserDetailsBug(Employee employee) {
@@ -37,7 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public UserDetails loadUserByUsername(String employee) throws UsernameNotFoundException {
-        Employee result = this.employeeRepository.findFirstByUsername(employee);
+        Employee result = this.employeeRepository.findFirstByUsernameAndDeletedOnIsNull(employee);
 
         if(result == null) throw new UsernameNotFoundException("Username not found.");
 
@@ -46,10 +47,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
     @Override
-    public EmployeeServiceModel getByUsername(String egn) {
+    public EmployeeServiceModel getByUsernameAndDeletedOnIsNotNull(String egn) {
         ModelMapper mapper = new ModelMapper();
 
-        Employee employee = this.employeeRepository.findFirstByUsername(egn);
+        Employee employee = this.employeeRepository.findFirstByUsernameAndDeletedOnIsNull(egn);
 
         EmployeeServiceModel result = mapper.map(employee, EmployeeServiceModel.class);
         result.setUsername(employee.getUsername()); // TODO fix this
@@ -61,7 +62,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         ModelMapper modelMapper = new ModelMapper();
 
         Employee employeeEntity = this.employeeRepository
-                .findFirstByUsername(username);
+                .findFirstByUsernameAndDeletedOnIsNull(username);
 
         if(employeeEntity == null) return;
         if (!model.getPassword().trim().equals(employeeEntity.getPassword())) {
@@ -71,5 +72,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         this.configureUserDetailsBug(employeeEntity);
         this.employeeRepository.save(employeeEntity);
+    }
+
+    @Override
+    public void save(EmployeeServiceModel model) {
+        Employee employee = this.modelMapper.map(model, Employee.class);
+        this.employeeRepository.save(employee);
     }
 }

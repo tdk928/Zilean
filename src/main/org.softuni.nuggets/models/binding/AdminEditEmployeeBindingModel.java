@@ -1,7 +1,6 @@
 package org.softuni.nuggets.models.binding;
 
 public class AdminEditEmployeeBindingModel {
-    private String id;
 
     private String username;
 
@@ -24,13 +23,6 @@ public class AdminEditEmployeeBindingModel {
     public AdminEditEmployeeBindingModel() {
     }
 
-    public String getId() {
-        return this.id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getUsername() {
         return this.username;

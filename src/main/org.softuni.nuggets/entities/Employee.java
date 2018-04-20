@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -21,7 +22,6 @@ public class Employee implements UserDetails {
             name = "UUID",
             strategy = "org.hibernate.id.UUIDGenerator"
     )
-
     @Column(name = "id", updatable = false, nullable = false)
     private String id;
 
@@ -53,14 +53,17 @@ public class Employee implements UserDetails {
     inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> authorities;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "employers_events",
             joinColumns = @JoinColumn(name = "employee_id"),
             inverseJoinColumns = @JoinColumn(name = "event_id"))
     private List<Event> events;
 
+    @Column(name = "deleted_on")
+    private LocalDate deletedOn;
+
     public Employee() {
-//        this.events = new ArrayList<>();
+        this.events = new ArrayList<>();
     }
 
     @Override
@@ -70,6 +73,10 @@ public class Employee implements UserDetails {
 
     public String getId() {
         return this.id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public void setAuthorities(Set<Role> authorities) {
@@ -160,5 +167,13 @@ public class Employee implements UserDetails {
 
     public void setEvents(List<Event> events) {
         this.events = events;
+    }
+
+    public LocalDate getDeletedOn() {
+        return this.deletedOn;
+    }
+
+    public void setDeletedOn(LocalDate deletedOn) {
+        this.deletedOn = deletedOn;
     }
 }

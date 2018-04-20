@@ -33,10 +33,10 @@ public class AccountController extends BaseController {
     @GetMapping("/login")
     public ModelAndView login(@RequestParam(required = false, name = "error") String error) {
         if (error != null) {
-            this.view("/user/login", "error", error);
+            this.view("login", "error", error);
         }
 
-        return this.view("/user/login");
+        return this.view("login");
     }
 
     @PostMapping("/logout")
@@ -50,10 +50,7 @@ public class AccountController extends BaseController {
 
     @GetMapping("/changePassword")
     public ModelAndView editEmployer(Principal principal) {
-        EmployeeServiceModel employer = this.userService.getByUsername(principal.getName());
-        Event event = new Event("4uk","dsa",new Date(),new Date(2018,4,18));
-        this.eventRepository.save(event);
-        employer.addEvent(event);
+        EmployeeServiceModel employer = this.userService.getByUsernameAndDeletedOnIsNotNull(principal.getName());
         return this.view("user/change-password").addObject("employer",employer);
     }
 
@@ -66,9 +63,8 @@ public class AccountController extends BaseController {
 
 //            Authentication result = authenticationManager.authenticate(request);
         SecurityContextHolder.getContext().setAuthentication(request);
-        EmployeeServiceModel employer = this.userService.getByUsername(principal.getName());
+        EmployeeServiceModel employer = this.userService.getByUsernameAndDeletedOnIsNotNull(principal.getName());
 
-//        employer.setEvents(employer.getEvents().add(event));
         this.userService.editEmployer(employer.getUsername(),model);
         return this.redirect("home");
     }
@@ -79,9 +75,10 @@ public class AccountController extends BaseController {
         return this.view("calendar");
     }
 
-//    @GetMapping("/calendar")
-//        public ModelAndView calendar() {
-//           return this.view("calendar");
-//        }
+    @GetMapping("/test")
+    public ModelAndView test() {
+//        throw new ResourceNotFoundException();
+        return this.view("test");
+    }
 
 }

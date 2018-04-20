@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 
 @Controller
 public class AdminController extends BaseController {
@@ -45,7 +46,6 @@ public class AdminController extends BaseController {
                 this.adminService.register(bindingModel);
             }
         }
-
         return this.redirect("login");
     }
 
@@ -97,7 +97,9 @@ public class AdminController extends BaseController {
 
     @PostMapping("/admin/delete/{username}")
     public ModelAndView removeConfirm(@PathVariable String username) {
-        this.adminService.removeEmployer(username);
+        EmployeeServiceModel employer = this.adminService.getByUsername(username);
+        employer.setDeletedOn(LocalDate.now());
+        this.adminService.save(employer);
         return this.redirect("admin/all-employers");
     }
 
