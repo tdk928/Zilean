@@ -66,11 +66,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         if(employeeEntity == null) return;
         if (!model.getPassword().trim().equals(employeeEntity.getPassword())) {
-            model.setPassword(this.encoder.encode(model.getPassword()));
+            employeeEntity.setPassword(this.encoder.encode(model.getPassword()));
         }
-        modelMapper.map(model,employeeEntity);
+//        modelMapper.map(model,employeeEntity);
 
-        this.configureUserDetailsBug(employeeEntity);
+//        this.configureUserDetailsBug(employeeEntity);
         this.employeeRepository.save(employeeEntity);
     }
 

@@ -1,8 +1,8 @@
 package org.softuni.nuggets.config;
 
-import org.softuni.nuggets.areas.user.services.EmployeeServiceImpl;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,13 +16,15 @@ import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true)
 public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private final EmployeeServiceImpl userDetailsService;
 
-    public ApplicationSecurityConfiguration(EmployeeServiceImpl userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
+//    @Autowired
+//    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication().withUser("bill").password("abc123").roles("USER");
+//        auth.inMemoryAuthentication().withUser("admin").password("root123").roles("ADMIN");
+//        auth.inMemoryAuthentication().withUser("dba").password("root123").roles("ADMIN","DBA");
+//    }
     @Override
     public void configure(WebSecurity web) throws Exception {
         web
@@ -32,37 +34,16 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                .antMatchers("/", "/login", "/register").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//                .csrf().disable()
-//                .formLogin()
-//                .loginPage("/login").permitAll()
-//                .loginProcessingUrl("/login")
-//                .usernameParameter("username")
-//                .passwordParameter("password")
-//                .defaultSuccessUrl("/home")
-//                .failureUrl("/error")
-//                .and()
-//                .rememberMe()
-//                .rememberMeParameter("remember")
-//                .rememberMeCookieName("rememberMeCookie")
-//                .key("48433e39-e610-4a2c-926c-f86d46f5360a")
-//                .tokenValiditySeconds(100)
-//                .userDetailsService(userDetailsService)
-//                .and()
-//                .logout().logoutUrl("/logout")
-//                .logoutSuccessUrl("/login")
-//                .permitAll();
         http
                 .cors()
                 .and()
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/**").permitAll()
+//                .antMatchers("/**").permitAll()
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/user/**").hasRole("USER")
+                .antMatchers("/user/**").hasRole("ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .formLogin()

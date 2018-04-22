@@ -19,6 +19,7 @@ import javax.validation.Valid;
 import java.time.LocalDate;
 
 @Controller
+@RequestMapping(value = "{admin}/")
 public class AdminController extends BaseController {
 
     private AdminService adminService;
@@ -34,29 +35,29 @@ public class AdminController extends BaseController {
             model.addAttribute("employerInput", new RegisterBindingModel());
         }
 
-        return this.view("admin/register");
+        return this.view("/admin/register");
     }
 
     @PostMapping("/register")
     public ModelAndView registerConfirm(@Valid @ModelAttribute RegisterBindingModel bindingModel, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return this.redirect("register");
+            return this.redirect("/admin/register");
         } else {
             if (bindingModel.getPassword().equals(bindingModel.getConfirmPassword())) {
                 this.adminService.register(bindingModel);
             }
         }
-        return this.redirect("login");
+        return this.redirect("home");
     }
 
 
-    @GetMapping("/admin/all-employers")
+    @GetMapping("/all-employers")
     public ModelAndView listAllEmployees() {
-        return this.view("/admin/all-employers", "allEmployers", this.adminService.getAllEmployers());
+        return this.view("admin/all-employers", "allEmployers", this.adminService.getAllEmployers());
 
     }
 
-    @GetMapping("/admin/edit/{username}")
+    @GetMapping("/edit/{username}")
     public ModelAndView editEmployee(@PathVariable("username") String username, Model model, ModelMapper modelMapper) {
         EmployeeServiceModel employeeByUsername = this.adminService.getByUsername(username);
 
@@ -69,7 +70,7 @@ public class AdminController extends BaseController {
         return this.view("/admin/edit-employer");
     }
 
-    @PostMapping("/admin/edit/{username}")
+    @PostMapping("/edit/{username}")
     public ModelAndView editEmployerForm(@PathVariable String username, @ModelAttribute(name = "employerInput") AdminEditEmployeeBindingModel editEmployeeBindingModel,
                                          BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
@@ -86,7 +87,7 @@ public class AdminController extends BaseController {
 
     }
 
-    @GetMapping("/admin/delete/{username}")
+    @GetMapping("/delete/{username}")
     public ModelAndView deleteEmployer(@PathVariable String username, Model model, ModelMapper modelMapper) {
         EmployeeServiceModel employeeByUsername = this.adminService.getByUsername(username);
 
@@ -95,11 +96,9 @@ public class AdminController extends BaseController {
         return this.view("/admin/remove-employer");
     }
 
-    @PostMapping("/admin/delete/{username}")
+    @PostMapping("/delete/{username}")
     public ModelAndView removeConfirm(@PathVariable String username) {
-        EmployeeServiceModel employer = this.adminService.getByUsername(username);
-        employer.setDeletedOn(LocalDate.now());
-        this.adminService.save(employer);
+        this.adminService.removeEmployer(username);
         return this.redirect("admin/all-employers");
     }
 

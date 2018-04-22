@@ -13,14 +13,14 @@
                     <a class="nav-link nav-link-white" href="/home" id="homeBtn">Home</a>
                 </li>
                 <!--admin functionality-->
-                <li class="nav-item disabled" sec:authorize="isAuthenticated()">
+                <li class="nav-item disabled" sec:authorize="hasRole('ADMIN')">
                     <a class="nav-link nav-link-white" href="/admin/all-employers" id="all-employers">All employers</a>
                 </li>
                 <li class="nav-item disabled" sec:authorize="isAnonymous()">
-                    <a class="nav-link nav-link-white" href="/login" id="loginBtn">Login</a>
+                    <a class="nav-link nav-link-white" href="login" id="loginBtn">Login</a>
                 </li>
-                <li class="nav-item disabled" sec:authorize="isAnonymous()">
-                    <a class="nav-link nav-link-white" href="/register" id="registerBtn">Register</a>
+                <li class="nav-item disabled" sec:authorize="hasRole('ADMIN')">
+                    <a class="nav-link nav-link-white" href="/admin/register" id="registerBtn">Register</a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item disabled">
                     <form th:action="@{/logout}" th:method="POST">
@@ -28,14 +28,11 @@
                     </form>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item disabled">
-                    <a class="nav-link nav-link-white" href="/changePassword" id="changePassword">Change Password</a>
+                    <a class="nav-link nav-link-white" href="/user/changePassword" id="changePassword">Change Password</a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item disabled">
-                    <a class="nav-link nav-link-white" href="/calendar" id="calendar">Calendar</a>
+                    <a class="nav-link nav-link-white" href="/user/calendar" id="viewCalendar">Calendar</a>
                 </li>
-                <!--<li class="nav-item disabled">-->
-                <!--<a class="nav-link nav-link-white" href="/calendar">Calendar</a>-->
-                <!--</li>-->
             </ul>
         </div>
     </nav>

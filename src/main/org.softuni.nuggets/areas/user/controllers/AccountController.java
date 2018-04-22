@@ -33,10 +33,10 @@ public class AccountController extends BaseController {
     @GetMapping("/login")
     public ModelAndView login(@RequestParam(required = false, name = "error") String error) {
         if (error != null) {
-            this.view("login", "error", error);
+            this.view("/user/login", "error", error);
         }
 
-        return this.view("login");
+        return this.view("/user/login");
     }
 
     @PostMapping("/logout")
@@ -45,16 +45,16 @@ public class AccountController extends BaseController {
             redirectAttributes.addFlashAttribute("logout", logout);
         }
 
-        return this.redirect("login");
+        return this.redirect("/login");
     }
 
-    @GetMapping("/changePassword")
+    @GetMapping("/user/changePassword")
     public ModelAndView editEmployer(Principal principal) {
         EmployeeServiceModel employer = this.userService.getByUsernameAndDeletedOnIsNotNull(principal.getName());
-        return this.view("user/change-password").addObject("employer",employer);
+        return this.view("/user/change-password").addObject("employer",employer);
     }
 
-    @PostMapping("/changePassword")
+    @PostMapping("/user/changePassword")
     public ModelAndView editEmployer(UserEditEmployeeBindingModel model,Principal principal) {
 
         Authentication request = new UsernamePasswordAuthenticationToken(
@@ -70,15 +70,11 @@ public class AccountController extends BaseController {
     }
 
 
-    @GetMapping("user/calendar")
-    public ModelAndView calendar() {
-        return this.view("calendar");
+    @GetMapping("/user/calendar")
+    public ModelAndView viewCalendar() {
+        return this.view("/user/jsoncalendar");
     }
 
-    @GetMapping("/test")
-    public ModelAndView test() {
-//        throw new ResourceNotFoundException();
-        return this.view("test");
-    }
+
 
 }
